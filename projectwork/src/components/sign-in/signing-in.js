@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import {auth} from "../../services/user-services";
 import {useAuth} from "../../hooks/useAuth";
 import {useNavigate} from "react-router-dom";
@@ -22,7 +22,7 @@ function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
+            <Link color="inherit" href="https://www.th-deg.de/en">
                 THD University
             </Link>{' '}
             {new Date().getFullYear()}
@@ -33,7 +33,7 @@ function Copyright(props) {
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
-const defaultTheme = createTheme();
+
 
 export default function SignIn() {
 
@@ -41,6 +41,8 @@ export default function SignIn() {
     const {AuthD,setAuth} = useAuth();
     const history = useNavigate();
     const [UserSigningState,setUserSigningState] = useState('signing-in');
+
+    const theme = useTheme();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -59,7 +61,7 @@ export default function SignIn() {
     }
 
     return (
-        <ThemeProvider theme={defaultTheme}>
+        <>
             {
                 UserSigningState === 'signing-in' ?
                     <Container component="main" maxWidth="xs">
@@ -75,7 +77,7 @@ export default function SignIn() {
                             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                                 <LockOutlinedIcon />
                             </Avatar>
-                            <Typography component="h1" variant="h5">
+                            <Typography component="h1" variant="h5" style={{ color: theme.palette.primary.headercolor}}>
                                 Sign in
                             </Typography>
                             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -107,7 +109,7 @@ export default function SignIn() {
                                     type="submit"
                                     fullWidth
                                     variant="contained"
-                                    sx={{ mt: 3, mb: 2 }}
+                                    sx={{ mt: 3, mb: 2 , color:theme.palette.primary.headercolor}}
                                 >
                                     Sign In
                                 </Button>
@@ -130,6 +132,6 @@ export default function SignIn() {
                     :
                     <SigningUp/>
             }
-        </ThemeProvider>
+            </>
     );
 }
